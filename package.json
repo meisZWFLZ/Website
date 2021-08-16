@@ -1,0 +1,11 @@
+{
+  "name": "my_website",
+  "version": "0.0.0",
+  "description": "website??!",
+  "main": "main.js",
+  "author": "OrangeSpuddy",
+  "license": "ISC",
+  "dependencies": {
+    "http": "0.0.1-security"
+  }
+}
