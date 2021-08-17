@@ -5,19 +5,20 @@ new MyServer(3001);
 
 
 // const http = require('http');
-// const { readFileSync: read } = require('fs');
+// // const { readFileSync: read } = require('fs');
 
-// const API = require("./server/API");
-// const port = 3000;
+// // const API = require("./server/API");
+// // const port = 3000;
 
-// const html = read("./client/index.html");
-// const js = read("./client/client.js");
-// const icon = read("./client/icon.png");
+// // const html = read("./client/index.html");
+// // const js = read("./client/client.js");
+// // const icon = read("./client/icon.png");
 
 // const server = http.createServer((req, res) => {
 //     console.log(req);
 //     server.myEmit(req, res);
 //     res.end();
+//     res.setHeader("Set-Cookie", fetch("http://localhost:" + port + "/api/users/new_user"))
 // });
 
 // server.myEmit = function (req, res) {

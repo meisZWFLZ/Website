@@ -4,4 +4,5 @@ module.exports = (req, res) => {
     res.writeHead(200, {"Content-Type": "application/json"})
     res.write(json);
     console.log(res);
+    res.end();
 }
