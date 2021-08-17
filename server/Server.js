@@ -11,7 +11,7 @@ class MyServer extends http.Server {
 
     static reqListener(req, res) {
         console.log(req);
-        const endpoint = require(`./endpoints/${req.url.slice(1)}.js`)//.bind(this)(req, res);
+        const endpoint = require(`./endpoints/${req.url.slice(1)}.js`);
         endpoint(req, res);
     }
 }

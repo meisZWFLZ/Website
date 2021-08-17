@@ -4,7 +4,7 @@ new MyServer(3001);
 
 
 
-// const http = require('http');
+const http = require('http');
 // // const { readFileSync: read } = require('fs');
 
 // // const API = require("./server/API");
@@ -14,12 +14,15 @@ new MyServer(3001);
 // // const js = read("./client/client.js");
 // // const icon = read("./client/icon.png");
 
-// const server = http.createServer((req, res) => {
-//     console.log(req);
-//     server.myEmit(req, res);
-//     res.end();
-//     res.setHeader("Set-Cookie", fetch("http://localhost:" + port + "/api/users/new_user"))
-// });
+const server = http.createServer((req, res) => {
+    console.log(req);
+    server.myEmit(req, res);
+    res.end();
+    res.statusCode;
+    res.setHeader("Location", "/home");
+    req.headers.host;
+    // res.setHeader("Set-Cookie", fetch("http://localhost:" + port + "/api/users/new_user"))
+});
 
 // server.myEmit = function (req, res) {
 //     url = req.url.slice(1).split(/\//g);

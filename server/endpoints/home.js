@@ -4,13 +4,7 @@ const intformat = require('biguint-format');
 const FlakeId = require("flake-idgen");
 
 module.exports = async (req, res) => {
-    userid = (req.headers.cookie || "");
-    console.log(userid);
-    userid = userid.split(/(?<!\\);\s/g);
-    console.log(userid);
-    userid = userid.find(e => /user=\d+/.test(e)) || "";
-    console.log(userid);
-    userid = userid.slice("user=".length);
+    userid = ((req.headers.cookie || "").split(/(?<!\\);\s/g).find(e => /user=\d+/.test(e)) || "").slice("user=".length);
     if (!userid) {
         userid = await intformat(new FlakeId({ epoch: 1629120000000, worker: 0, datacenter: 0 }).next(), 'dec');
 
@@ -21,7 +15,9 @@ module.exports = async (req, res) => {
         );
     }
     console.log(userid);
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.write(read("./server/data/users/" + userid + ".json"));
+
+    res.setHeader("Set-Cookie", `user=${userid}; Expires=3021-08-16T07:00:00.000Z; SameSite=Strict; Domain=${req.headers.host}`);
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.write(html);
     res.end();
 }
