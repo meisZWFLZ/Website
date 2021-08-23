@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- <html lang="en"> -->
 
-<head>
+<head style="background-color:#1c87c9;">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,12 @@
 </head>
 
 <body>
-    <img src="icon.png" alt="">
+    <button name="hi" ; onclick="console.log('hi');">
+        Click me :)
+    </button>
+
+    <a href="YOURMOM"><img src="waffle.png" alt="click me"></a>
+
     <script>
         cookie = document.cookie.split(/(?<!\\);\s/g).find(e => /user=user\d+/.test(e))
         if (cookie) console.log(cookie.slice("user=user".length));

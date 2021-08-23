@@ -1,5 +1,5 @@
 const { readFileSync: read, writeFileSync: write } = require('fs');
-const html = read("./client/index.html");
+const html = read("./client/home.html");
 const intformat = require('biguint-format');
 const FlakeId = require("flake-idgen");
 
@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
     }
     console.log(userid);
 
-    res.setHeader("Set-Cookie", `user=${userid}; Expires=3021-08-16T07:00:00.000Z; SameSite=Strict; Domain=${req.headers.host}`);
+    res.setHeader("Set-Cookie", `user=${userid}; Expires=Tue, 16 Aug 3021 00:00:00 GM;`);
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.write(html);
     res.end();
