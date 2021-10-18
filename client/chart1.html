@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chart </title>
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(setChart);
+
+        function setChart(string) {
+            var data = google.visualization.arrayToDataTable(((string) => {
+                console.log(string);
+                if (!string) return [[], []];
+                output = {};
+
+                output['Task'] = 'Hours per Day';
+
+                chars = Array.from(string + "");
+                chars.forEach(c => {
+                    char = /\d/.test(c) ? "#" + c : c;
+                    if (!output[char]) output[char] = 1;
+                    output[char]++;
+                });
+
+                output = Array.from(Object.entries(output)).sort((a, b) => a[1] - b[1]);
+
+                console.log(output);
+                return output;
+            })(string));
+
+            var options = {
+                title: 'Character usage'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+
+<body>
+    <select name="method" id="method">
+        <option value="choose" id="choose">--Please choose an option--</option>
+        <option value="text" id="text">Text Box</option>
+        <option value="file" id="file">Choose File</option>
+        <option value="url" id="url">From Website URL</option>
+    </select>
+
+    <div class="settings">
+        <select name="settings" id="settings">
+            <option value="choose">Settings</option>
+            <option value="chars">Valid Characters</option>
+        </select>
+    </div>
+    <!-- <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" multiple> -->
+    <br />
+    <div class="input"></div>
+    <textarea name="output" id="output" cols="100" rows="20" placeholder="output" disabled=true></textarea>
+    <br />
+    <!-- <button type="submit" value="submit" onclick="submitScript()"> UR MOM (SUBMIT)</button> -->
+    <div id="piechart" style="width: 900px; height: 500px;"> </div>
+    <script type="text/javascript" name="chart script">
+        const method = document.querySelector('select#method');
+        const settingsDiv = document.querySelector(".settings");
+        const settingsElem = settingsDiv.querySelector('select#settings');
+
+        method.addEventListener('change', methodEvent);
+        settings.addEventListener('change', settingsEvent);
+
+        function methodEvent(event) {
+            //element
+            e = null;
+            switch (event.target.value) {
+                case "text":
+                    e = document.createElement("textarea");
+                    e.setAttribute("placeholder", "input");
+                    e.setAttribute("cols", 100);
+                    e.setAttribute("rows", 20);
+                    e.setAttribute("name", "text");
+                    e.addEventListener('change', textAreaEvent)
+                    break;
+                case "file":
+                    e = document.createElement("input");
+                    e.setAttribute("type", "file");
+                    e.setAttribute("accept", ".txt");
+                    e.setAttribute("name", "file");
+                    e.addEventListener('change', fileInputEvent)
+                    break;
+                case "url":
+                    e = document.createElement("input");
+                    e.setAttribute("type", "url");
+                    e.setAttribute("name", "url");
+                    break;
+            }
+            oldE = document.getElementById("input");
+            if (oldE) oldE.remove();
+
+            if (!e) return;
+            div = document.querySelector('.input');
+
+            e.setAttribute("id", "input");
+            div.appendChild(e);
+        }
+
+        class CharacterOption {
+            constructor(text, value, elem) {
+                this.displayText = text;
+                this.value = value;
+                this.element = elem;
+                if (this.element) this.eId = elem.id;
+                this.elem = null;
+            }
+            append(setting) {
+                this.div = setting.parentElement;
+                this.elem = document.createElement("option");
+                this.elem.setAttribute("value", this.value);
+                this.elem.textContent = this.displayText;
+                // if (this.element) this.elem.addEventListener(this.eventListener);
+                // settings.appendChild(this.elem);
+                return this.elem;
+            }
+            eventListener(event) {
+                chilren = debug(this.div.chilren);
+                if (elem = children.find((e) => e.id == eId)) elem = this.element;
+                else this.div.appendChild(this.element);
+            }
+
+            static all() {
+                return new CharacterOption("all", "all", null);
+            }
+            static async debug(thing) {
+                await console.log(thing);
+                return thing;
+            }
+        }
+
+        function settingsEvent(event) {
+            for (const child of (CharacterOption.debug(settingsDiv.chilren) ? [settingsDiv.children ... ] : [])) settingsDiv.removeChild(child);
+            switch (event.target.value) {
+                case "chars":
+                    elem = document.createElement("select");
+                    [
+                        CharacterOption.all()
+                    ].forEach(e => e.append(elem));
+                    // settingsDiv.appendChild(elem);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function textAreaEvent(event) {
+            drawChart(event.target.value);
+        }
+
+        async function fileInputEvent(event) {
+            const input = event.target;
+            if (!'files' in input || !input.files.length > 0) return;
+            const reader = new FileReader()
+            reader.onload = event => drawChart(event.target.result)
+            reader.onerror = error => drawChart(error)
+            reader.readAsText(input.files[0]);
+        }
+
+        function drawChart(string) {
+            console.log(string);
+            document.getElementById("output").textContent = string;
+            setChart(string);
+        }
+    </script>
+</body>
+
+</html>

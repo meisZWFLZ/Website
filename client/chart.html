@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 
 <head>
     <meta charset="UTF-8">
@@ -6,46 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>chart </title>
 
-    <!-- placeHolder0 -->
-</head>
-
-<body>
-    <form action="/chart" method="GET">
-        <textarea rows="5" cols="60" name="text" placeholder="Enter text"><!-- placeHolder1 --></textarea>
-        <br />
-        <input type="submit" value="submit" />
-    </form>
-    <div id="piechart" style="width: 900px; height: 500px;">
-</body>
-
-</html>
-
-<!-- <html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>chart </title>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawChart);
 
-        function drawChart() {
+        function drawChart(string) {
+            var data = google.visualization.arrayToDataTable(((string) => {
+                console.log(string);
+                if (!string) return [[], []];
+                output = {};
 
-            var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Work', 11],
-                ['Nap', 2],
-                ['Eat', 2],
-                ['Watch TV', 2],
-                ['Sleep', 7]
-            ]);
+                output['Task'] = 'Hours per Day';
+
+                chars = Array.from(string + "");
+                chars.forEach(char => {
+                    if (!output[char]) output[char] = 1;
+                    output[char]++;
+                });
+
+                output = Array.from(Object.entries(output));
+
+                console.log(output);
+                return output;
+            })(string));
 
             var options = {
-                title: 'My Daily Activities'
+                title: 'Character usage'
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -56,7 +44,78 @@
 </head>
 
 <body>
-    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    <script type="text/javascript" name="chart script">
+        const input = document.querySelector('input');
+        // input.style.opacity = 0;
+        input.addEventListener('change', selectorScript)
+
+        function selectorScript(value) {
+            console.log(value)
+
+            e = null;
+            switch (value) {
+                case "text":
+                    e = document.createElement("textarea");
+                    e.setAttribute("placeholder", "URMOM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    e.setAttribute("cols", 60);
+                    e.setAttribute("rows", 5);
+                    e.setAttribute("name", "text");
+                    break;
+                case "file":
+                    e = document.createElement("input");
+                    e.setAttribute("type", "file");
+                    e.setAttribute("accept", ".txt");
+                    e.setAttribute("name", "file");
+                    break;
+                case "url":
+                    e = document.createElement("input");
+                    e.setAttribute("type", "url");
+                    e.setAttribute("name", "url");
+                    break;
+            }
+            oldE = document.getElementById("select_product");
+            if (oldE) oldE.remove();
+
+            if (!e) return;
+            div = document.getElementById("thingymabob");
+
+            e.setAttribute("id", "select_product");
+            document.body.insertBefore(e, div);
+        }
+
+        async function submitScript() {
+            elem = document.getElementById("select_product")
+            if (!elem) return alert("please specify a value");
+            console.log(elem.value);
+            switch (elem.getAttribute("name")) {
+                case "text":
+                    drawChart(elem.value);
+                    break;
+                case "file":
+                    const reader = new FileReader();
+                    reader.onload = (evt) => console.log(evt.target.result);
+                    drawChart(await reader.readAsText(elem.value));
+                    break;
+                case "url":
+                    break;
+            }
+        }
+
+    </script>
+    <select name="type" id="type">
+        <option value="choose">--Please choose an option--</option>
+        <option value="text">Text Box</option>
+        <option value="file">Choose File</option>
+        <option value="url">From Website URL</option>
+    </select>
+    <br />
+    <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" multiple>
+    <br />
+    <div id="thingymabob">
+    </div>
+    <br />
+    <button type="submit" value="submit" onclick="submitScript()"> UR MOM (SUBMIT)</button>
+    <div id="piechart" style="width: 900px; height: 500px;">
 </body>
 
-</html> -->
+</html>
